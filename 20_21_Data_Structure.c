@@ -1,52 +1,27 @@
+//Linear Search
+
 #include<stdio.h>
-#include<string.h>
 
-//Now I will add this file to my repository. Then it will be modified time to time.
-void LinearSearch(int arr[], int arrSize, int searchNum);
-void BinarySearch(int arr[], int arrSize, int searchNum);
-void BubbleSort(int arr[], int arrSize);
-void InsertionSort(int arr[], int n);
+int main(){
+    printf("How many numbers do you want to enter?: ");
 
-int main() {
-    int select;
-    do {
-        printf("Please select from menu: \n");
-        printf("0.End\n1.Linear Search\n2.Binary Search\n3.Bubble Sort\n4.Insertion Sort\n");
-        scanf("%d", &select);
+    int n;
+    scanf("%d",&n);
 
-        switch(select){
-            case 0:
-                printf("End");
+    int a[n],i;
+    for (i=0;i<n;i++){
+        printf("\nPlease enter the %d st/nd/rd/th element: ",i+1);
+        scanf("%d",&a[i]);
+    }
 
-                break;
+    printf("\nPlease enter the number you want to search: ");
+    int x;
+    scanf("%d",&x);
 
-
-            case 1:
-
-                break;
-
-
-            case 2:
-
-                break;
-
-
-            case 3:
-
-                break;
-
-
-            case 4:
-
-                break;
-
-
-            default:
-                printf("\nInvalid selection. Please select a valid number from the menu.\n");
-                break;
+    for(i=0;i<n;i++){
+        if(a[i]==x){
+            printf("\n%d is found at the position %d.\n",x,i+1);
         }
     }
-    while(select != 0);
-
     return 0;
 }
