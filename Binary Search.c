@@ -1,4 +1,4 @@
-//Bubble Sort
+//Binary Search
 #include<stdio.h>
 int main(){
     printf("How many number(s) do you want to enter?: ");
