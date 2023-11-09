@@ -18,7 +18,7 @@ int main(){
         switch(select){
 
             case 0:{
-                printf("\nThe End.\n");
+                printf("-The End-\n");
                 break;
             }
 
@@ -95,7 +95,39 @@ int main(){
             }
 
             case 3:{
-                printf("3");
+                printf("Welcome! Now we are performing 'Binary Search'.\n");
+                printf("How many number(s) do you want to enter? ");
+                int n;
+                scanf("%d",&n);
+
+                int arr[n];
+                printf("Please enter the number(s) below must be sorted in ascending order -\n");
+
+                for (int i=0;i<n;i++){
+                    if(i==0){
+                        printf("%dst number: ",i+1);
+                        scanf("%d",&arr[i]);
+                    }
+                    else if(i==1){
+                        printf("%dnd number: ",i+1);
+                        scanf("%d",&arr[i]);
+                    }
+                    else if(i==2){
+                        printf("%drd number: ",i+1);
+                        scanf("%d",&arr[i]);
+                    }
+                    else{
+                        printf("%dth number: ",i+1);
+                        scanf("%d",&arr[i]);
+                    }
+                }
+
+                printf("Now, enter the number you want to search for: ");
+                int x;
+                scanf("%d",&x);
+
+                binarySearch(n,arr,x);
+                printf("\n\n");
                 break;
             }
 
@@ -147,4 +179,40 @@ bubbleSort(int n1,int arr1[]){
     for(int i=0;i<=n1-1;i++){
         printf("%d ",arr1[i]);
     }
+}
+
+binarySearch(int n1,int arr1[],int x1){
+    int n2=2*n1,mid,s=0,e=n1-1;
+
+    for(int i=1;i<=n1;i++){
+            mid=arr1[(s+e)/2];
+
+            if((x1<arr1[0])||(x1>arr1[n1-1])){
+                printf("You are searching for %d and it is located at the position nowhere!\n",x1);
+                break;
+            }
+
+            if(s==e&&x1!=mid){
+                printf("You are searching for %d and it is located at the position nowhere!\n",x1);
+                break;
+            }
+
+            if(s>e){
+                printf("You are searching for %d and it is located at the position nowhere!\n",x1);
+                break;
+            }
+
+            if(x1==mid){
+                printf("You are searching for %d and it is located at the position %d.\n",x1,(s+e)/2+1);
+                break;
+            }
+            else if(x1<mid){
+                e=(s+e)/2-1;
+            }
+            else if(x1>mid){
+                s=(s+e)/2+1;
+            }
+            else{
+            }
+        }
 }
