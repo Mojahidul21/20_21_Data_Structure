@@ -1,7 +1,7 @@
 #include<stdio.h>
 
 void linearSearch(int,int,int);
-void bubbleSort(int,int,int);
+void bubbleSort(int,int);
 void binarySearch(int,int,int);
 void insertionSort(int,int);
 
@@ -9,7 +9,7 @@ int main(){
     int select;
 
     do{
-        printf("Please enter your job index from the list below: \n\n");
+        printf("Please enter your job index from the list below:\n");
         printf("1. Linear Search\n2. Bubble Sort\n3. Binary Search\n4. Insertion Sort\n0. End\n\n");
 
 
@@ -23,7 +23,7 @@ int main(){
             }
 
             case 1:{
-                printf("Welcome! Now we are performing Linear Search.\n");
+                printf("Welcome! Now we are performing 'Linear Search'.\n");
                 printf("How many number(s) do you want to enter? ");
                 int n;
                 scanf("%d",&n);
@@ -60,13 +60,13 @@ int main(){
             }
 
             case 2:{
-                printf("Welcome! Now we are performing Bubble Sort.\n");
-                printf("How many number(s) do you want to enter? ");
+                printf("Welcome! Now we are performing 'Bubble Sort'.\n");
+                printf("How many numbers do you want to enter? ");
                 int n;
                 scanf("%d",&n);
 
                 int arr[n];
-                printf("Please enter the number(s) below -\n");
+                printf("Please enter the numbers below -\n");
 
                 for (int i=0;i<n;i++){
                     if(i==0){
@@ -87,11 +87,10 @@ int main(){
                     }
                 }
 
-                printf("Now, enter the number you want to search for: ");
-                int x;
-                scanf("%d",&x);
+                printf("The sorted numbers in ascending order are as follos -\n");
 
-                linearSearch(n,arr,x);
+                bubbleSort(n,arr);
+                printf("\n\n");
                 break;
             }
 
@@ -133,3 +132,19 @@ linearSearch(int n1,int arr1[],int x1){
     }
 }
 
+bubbleSort(int n1,int arr1[]){
+    for(int i=0,j=1;i<=n1-1-1;i++,j++){ //array size (n1), index (-1), last but one position (-1)
+        for(int k=0; k<=n1-1-j;k++){
+            if(arr1[k]>arr1[k+1]){
+                int container;
+                container=arr1[k];
+                arr1[k]=arr1[k+1];
+                arr1[k+1]=container;
+            }
+        }
+    }
+
+    for(int i=0;i<=n1-1;i++){
+        printf("%d ",arr1[i]);
+    }
+}
