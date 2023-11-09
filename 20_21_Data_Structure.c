@@ -87,7 +87,7 @@ int main(){
                     }
                 }
 
-                printf("The sorted numbers in ascending order are as follos -\n");
+                printf("The sorted numbers in ascending order are as follows -\n");
 
                 bubbleSort(n,arr);
                 printf("\n\n");
@@ -132,13 +132,42 @@ int main(){
             }
 
             case 4:{
-                printf("4");
+                printf("Welcome! Now we are performing 'Insertion Sort'.\n");
+                printf("How many number(s) do you want to enter? ");
+                int n;
+                scanf("%d",&n);
+
+                int arr[n];
+                printf("Please enter the number(s) below -\n");
+
+                for (int i=0;i<n;i++){
+                    if(i==0){
+                        printf("%dst number: ",i+1);
+                        scanf("%d",&arr[i]);
+                    }
+                    else if(i==1){
+                        printf("%dnd number: ",i+1);
+                        scanf("%d",&arr[i]);
+                    }
+                    else if(i==2){
+                        printf("%drd number: ",i+1);
+                        scanf("%d",&arr[i]);
+                    }
+                    else{
+                        printf("%dth number: ",i+1);
+                        scanf("%d",&arr[i]);
+                    }
+                }
+
+                printf("The sorted numbers in ascending order are as follows -\n");
+
+                insertionSort(n,arr);
+                printf("\n\n");
                 break;
             }
 
             default:{
                 printf("Invalid selection!\n");
-                printf("Please enter a valid index from the menu: ");
                 break;
             }
         }
@@ -215,4 +244,22 @@ binarySearch(int n1,int arr1[],int x1){
             else{
             }
         }
+}
+
+insertionSort(int n1,int arr1[]){
+    for(int i=1;i<n1;i++){
+        if(arr1[i]<arr1[i-1]){
+            int temp=arr1[i];
+
+            for(int j=i-1;(j>=0)&&(temp<arr1[j]);j--){
+                arr1[j+1]=arr1[j];
+                arr1[j]=temp;
+            }
+        }
+    }
+
+    printf("The numbers you entered are sorted in ascending order as follows:\n");
+    for(int i=0;i<n1;i++){
+        printf("%d ",arr1[i]);
+    }
 }
