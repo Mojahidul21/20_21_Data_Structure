@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include <windows.h>
 
 void linearSearch(int,int,int);
 void bubbleSort(int,int);
@@ -9,11 +10,49 @@ int main(){
     int select;
 
     do{
-        printf("Please enter your job index from the list below:\n");
-        printf("1. Linear Search\n2. Bubble Sort\n3. Binary Search\n4. Insertion Sort\n0. End\n\n");
+        int ForgC=50;
+        WORD wColor;
+     //This handle is needed to get the current background attribute
 
+        HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+        CONSOLE_SCREEN_BUFFER_INFO csbi;
+        //csbi is used for wAttributes word
 
+        if(GetConsoleScreenBufferInfo(hStdOut, &csbi)){
+            //To mask out all but the background attribute, and to add the color
+            wColor = (csbi.wAttributes & 0xF0) + (ForgC & 0x0F);
+            SetConsoleTextAttribute(hStdOut, wColor);
+        }
+
+        printf("                                                         \n");
+        printf("                          ******                         \n");
+        printf("     ********************* MENU ************************ \n");
+        printf("    *                     ******                        *\n");
+        printf("    *                                                   *\n");
+        printf("    *  1. Linear Search          2. Bubble Sort         *\n");
+        printf("    *  3. Binary Search          4. Insertion Sort      *\n");
+        printf("    *  5. Find Factorial         6. Fibonacci Series    *\n");
+        printf("    *  7. Tower of Hanoi                                *\n");
+        printf("    *                                                   *\n");
+        printf("     *************************************************** \n");
+        printf("                                                         \n");
+
+        printf("     Please enter your job index as per the above menu: ");
         scanf("%d",&select);
+
+        ForgC=0;
+        WORD wColor1;
+        //This handle is needed to get the current background attribute
+
+        HANDLE hStdOut1 = GetStdHandle(STD_OUTPUT_HANDLE);
+        CONSOLE_SCREEN_BUFFER_INFO csbi1;
+        //csbi is used for wAttributes word
+
+        if(GetConsoleScreenBufferInfo(hStdOut, &csbi1)){
+            //To mask out all but the background attribute, and to add the color
+            wColor1 = (csbi.wAttributes & 0xF0) + (ForgC & 0x0F);
+            SetConsoleTextAttribute(hStdOut, wColor1);
+        }
 
         switch(select){
 
@@ -23,7 +62,7 @@ int main(){
             }
 
             case 1:{
-                printf("Welcome! Now we are performing 'Linear Search'.\n");
+                printf("\n\nWe are now performing 'Linear Search'.\n");
                 printf("How many number(s) do you want to enter? ");
                 int n;
                 scanf("%d",&n);
@@ -55,12 +94,12 @@ int main(){
                 scanf("%d",&x);
 
                 linearSearch(n,arr,x);
-                printf("\n\n");
+                printf("\n");
                 break;
             }
 
             case 2:{
-                printf("Welcome! Now we are performing 'Bubble Sort'.\n");
+                printf("\n\nWe are now performing 'Bubble Sort'.\n");
                 printf("How many numbers do you want to enter? ");
                 int n;
                 scanf("%d",&n);
@@ -90,12 +129,12 @@ int main(){
                 printf("The sorted numbers in ascending order are as follows -\n");
 
                 bubbleSort(n,arr);
-                printf("\n\n");
+                printf("\n");
                 break;
             }
 
             case 3:{
-                printf("Welcome! Now we are performing 'Binary Search'.\n");
+                printf("\n\nWe are now performing 'Binary Search'.\n");
                 printf("How many number(s) do you want to enter? ");
                 int n;
                 scanf("%d",&n);
@@ -127,12 +166,12 @@ int main(){
                 scanf("%d",&x);
 
                 binarySearch(n,arr,x);
-                printf("\n\n");
+                printf("\n");
                 break;
             }
 
             case 4:{
-                printf("Welcome! Now we are performing 'Insertion Sort'.\n");
+                printf("\n\nWe are now performing 'Insertion Sort'.\n");
                 printf("How many number(s) do you want to enter? ");
                 int n;
                 scanf("%d",&n);
@@ -162,12 +201,39 @@ int main(){
                 printf("The sorted numbers in ascending order are as follows -\n");
 
                 insertionSort(n,arr);
-                printf("\n\n");
+                printf("\n");
+                break;
+            }
+
+            case 5:{
+                printf("\n\nWe are now performing 'Find Factorial'.\n");
+                printf("Enter the number you want factorial: ");
+                printf("\n");
+                break;
+            }
+
+            case 6:{
+                printf("\n\nWe are now performing 'Fibonacci Series'.\n");
+                printf("How many terms do you want the series up to? ");
+                printf("\n");
                 break;
             }
 
             default:{
-                printf("Invalid selection!\n");
+                ForgC=12;
+                WORD wColor1;
+                //This handle is needed to get the current background attribute
+
+                HANDLE hStdOut1 = GetStdHandle(STD_OUTPUT_HANDLE);
+                CONSOLE_SCREEN_BUFFER_INFO csbi1;
+                //csbi is used for wAttributes word
+
+                if(GetConsoleScreenBufferInfo(hStdOut, &csbi1)){
+                    //To mask out all but the background attribute, and to add the color
+                    wColor1 = (csbi.wAttributes & 0xF0) + (ForgC & 0x0F);
+                    SetConsoleTextAttribute(hStdOut, wColor1);
+                }
+                printf("\nInvalid selection! Please enter a valid index as per the menu.\n");
                 break;
             }
         }
@@ -181,7 +247,7 @@ linearSearch(int n1,int arr1[],int x1){
     int counter=0;
     for(int i=0;i<n1;i++){
         if(arr1[i]==x1){
-            printf("\n%d is found at the position %d.",x1,i+1);
+            printf("%d is found at the position %d.\n",x1,i+1);
         }
         else{
             counter++;
