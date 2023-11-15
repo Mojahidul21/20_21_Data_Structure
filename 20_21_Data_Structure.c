@@ -5,6 +5,7 @@ void linearSearch(int,int,int);
 void bubbleSort(int,int);
 void binarySearch(int,int,int);
 void insertionSort(int,int);
+long long int factorial(int);
 
 int main(){
     int select;
@@ -31,7 +32,7 @@ int main(){
         printf("    *                                                   *\n");
         printf("    *  1. Linear Search          2. Bubble Sort         *\n");
         printf("    *  3. Binary Search          4. Insertion Sort      *\n");
-        printf("    *  5. Find Factorial         6. Fibonacci Series    *\n");
+        printf("    *  5. Factorial              6. Fibonacci Series    *\n");
         printf("    *  7. Tower of Hanoi                                *\n");
         printf("    *                                                   *\n");
         printf("     *************************************************** \n");
@@ -206,8 +207,13 @@ int main(){
             }
 
             case 5:{
-                printf("\n\nWe are now performing 'Find Factorial'.\n");
-                printf("Enter the number you want factorial: ");
+                printf("\n\nWe are now performing 'Factorial'.\n");
+                printf("Enter the number (from 1 to 20) you want factorial: ");
+                int n;
+                scanf("%d",&n);
+
+                printf("The factorial of %d is: %I64d.\n",n,factorial(n));
+
                 printf("\n");
                 break;
             }
@@ -327,5 +333,16 @@ insertionSort(int n1,int arr1[]){
     printf("The numbers you entered are sorted in ascending order as follows:\n");
     for(int i=0;i<n1;i++){
         printf("%d ",arr1[i]);
+    }
+}
+
+long long int factorial(int n1){
+    if(n1==0){
+        return 1;
+
+    }
+
+    else{
+        return n1*factorial(n1-1);
     }
 }
