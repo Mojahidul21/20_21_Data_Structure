@@ -1,5 +1,6 @@
-#include<stdio.h>
-#include <windows.h>
+# include<stdio.h>
+# include <windows.h>
+# include <math.h>
 
 void linearSearch(int,int,int);
 void bubbleSort(int,int);
@@ -7,6 +8,7 @@ void binarySearch(int,int,int);
 void insertionSort(int,int);
 long long int factorial(int);
 int FibonacciSeries(int);
+void ToH(int, char, char, char);
 
 int main(){
     int select;
@@ -208,11 +210,11 @@ int main(){
             }
 
             case 5:{
-                printf("\n\nWe are now performing 'Factorial'.\n");
-                printf("Enter the number (from 1 to 20) you want factorial: ");
+                printf("\n\nWe are now performing 'Factorial'.");
+                printf("\nEnter the number (from 1 to 20) you want factorial: ");
                 int n;
                 scanf("%d",&n);
-                if(n<0||n>20){
+                while(n<0||n>20){
                     ForgC=12;
                     WORD wColor1;
                     //This handle is needed to get the current background attribute
@@ -227,7 +229,7 @@ int main(){
                         SetConsoleTextAttribute(hStdOut, wColor1);
                     }
 
-                    printf("\nPlease enter a valid number! from 1 to 20.");
+                    printf("Please enter a valid number! from 0 to 20: ");
 
                     ForgC=0;
                     WORD wColor2;
@@ -243,7 +245,6 @@ int main(){
                         SetConsoleTextAttribute(hStdOut2, wColor2);
                     }
                     scanf("%d",&n);
-                    printf("\n");
                 }
 
                 printf("The factorial of %d is: %I64d.\n",n,factorial(n));
@@ -255,10 +256,40 @@ int main(){
             case 6:{
                 printf("\n\nWe are now performing 'Fibonacci Series'.\n");
                 printf("How many terms do you want the series up to? ");
+
                 int n1;
                 scanf("%d",&n1);
-                if(n1<1){
-                    printf("Please enter a valid number! Above 0.");
+                while(n1<1){
+                    ForgC=12;
+                    WORD wColor1;
+                    //This handle is needed to get the current background attribute
+
+                    HANDLE hStdOut1 = GetStdHandle(STD_OUTPUT_HANDLE);
+                    CONSOLE_SCREEN_BUFFER_INFO csbi1;
+                    //csbi is used for wAttributes word
+
+                    if(GetConsoleScreenBufferInfo(hStdOut, &csbi1)){
+                        //To mask out all but the background attribute, and to add the color
+                        wColor1 = (csbi.wAttributes & 0xF0) + (ForgC & 0x0F);
+                        SetConsoleTextAttribute(hStdOut, wColor1);
+                    }
+
+                    printf("Please enter a valid number! Enter above 0: ");
+
+                    ForgC=0;
+                    WORD wColor2;
+                    //This handle is needed to get the current background attribute
+
+                    HANDLE hStdOut2 = GetStdHandle(STD_OUTPUT_HANDLE);
+                    CONSOLE_SCREEN_BUFFER_INFO csbi2;
+                    //csbi is used for wAttributes word
+
+                    if(GetConsoleScreenBufferInfo(hStdOut2, &csbi2)){
+                        //To mask out all but the background attribute, and to add the color
+                        wColor2 = (csbi2.wAttributes & 0xF0) + (ForgC & 0x0F);
+                        SetConsoleTextAttribute(hStdOut2, wColor2);
+                    }
+
                     scanf("%d",&n1);
                 }
 
@@ -271,6 +302,54 @@ int main(){
                         printf("%d.\n",FibonacciSeries(i));
                     }
                 }
+
+                printf("\n");
+                break;
+            }
+
+            case 7:{
+                printf("\n\nWe are now performing 'Tower of Hanoi'.");
+                printf("\nEnter the number of disk(s): ");
+                int n;
+                scanf("%d",&n);
+                while(n<1){
+                    ForgC=12;
+                    WORD wColor1;
+                    //This handle is needed to get the current background attribute
+
+                    HANDLE hStdOut1 = GetStdHandle(STD_OUTPUT_HANDLE);
+                    CONSOLE_SCREEN_BUFFER_INFO csbi1;
+                    //csbi is used for wAttributes word
+
+                    if(GetConsoleScreenBufferInfo(hStdOut, &csbi1)){
+                        //To mask out all but the background attribute, and to add the color
+                        wColor1 = (csbi.wAttributes & 0xF0) + (ForgC & 0x0F);
+                        SetConsoleTextAttribute(hStdOut, wColor1);
+                    }
+                    printf("Invalid input! Enter above 0: ");
+
+                    ForgC=0;
+                    WORD wColor2;
+                    //This handle is needed to get the current background attribute
+
+                    HANDLE hStdOut2 = GetStdHandle(STD_OUTPUT_HANDLE);
+                    CONSOLE_SCREEN_BUFFER_INFO csbi2;
+                    //csbi is used for wAttributes word
+
+                    if(GetConsoleScreenBufferInfo(hStdOut2, &csbi2)){
+                        //To mask out all but the background attribute, and to add the color
+                        wColor2 = (csbi2.wAttributes & 0xF0) + (ForgC & 0x0F);
+                        SetConsoleTextAttribute(hStdOut2, wColor2);
+                    }
+
+                    scanf("%d",&n);
+                }
+
+                printf("Note-1: Disks are marked 1, 2, 3, ... from top to bottom.");
+                printf("\nNote-2: Pegs are marked A, B, C from left to right (smallest to biggest.");
+                printf("\nNote-3: Total disk(s) = n = %d and so total move(s) = 2^n - 1 = 2^%d - 1 = %.0lf.",n,n,pow(2,n)-1);
+                printf("\nThe step by step moves are as follows -");
+                ToH(n,'A','C','B');
 
                 printf("\n");
                 break;
@@ -407,4 +486,17 @@ int FibonacciSeries(int n){
     else{
         return FibonacciSeries(n-2)+FibonacciSeries(n-1);
     }
+}
+
+ToH(int n1,char from_peg,char to_peg,char aux_peg){
+    // Base Condition
+    if (n1==1){
+        printf("\nMove disk-1 from peg-%c to peg-%c",from_peg,to_peg);
+        return;
+    }
+
+    // Calling the function recursively twice
+    ToH(n1-1, from_peg, aux_peg, to_peg);
+    printf("\nMove disk-%d from peg-%c to peg-%c",n1,from_peg,to_peg);
+    ToH(n1-1,aux_peg,to_peg,from_peg);
 }
