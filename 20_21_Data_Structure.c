@@ -6,6 +6,7 @@ void bubbleSort(int,int);
 void binarySearch(int,int,int);
 void insertionSort(int,int);
 long long int factorial(int);
+int FibonacciSeries(int);
 
 int main(){
     int select;
@@ -30,10 +31,10 @@ int main(){
         printf("     ********************* MENU ************************ \n");
         printf("    *                     ******                        *\n");
         printf("    *                                                   *\n");
-        printf("    *  1. Linear Search          2. Bubble Sort         *\n");
-        printf("    *  3. Binary Search          4. Insertion Sort      *\n");
-        printf("    *  5. Factorial              6. Fibonacci Series    *\n");
-        printf("    *  7. Tower of Hanoi                                *\n");
+        printf("    *  0. End                    1. Linear Search       *\n");
+        printf("    *  2. Bubble Sort            3. Binary Search       *\n");
+        printf("    *  4. Insertion Sort         5. Factorial           *\n");
+        printf("    *  6. Fibonacci Series       7. Tower of Hanoi      *\n");
         printf("    *                                                   *\n");
         printf("     *************************************************** \n");
         printf("                                                         \n");
@@ -58,7 +59,7 @@ int main(){
         switch(select){
 
             case 0:{
-                printf("-The End-\n");
+                printf("\n-The End-\n");
                 break;
             }
 
@@ -211,6 +212,39 @@ int main(){
                 printf("Enter the number (from 1 to 20) you want factorial: ");
                 int n;
                 scanf("%d",&n);
+                if(n<0||n>20){
+                    ForgC=12;
+                    WORD wColor1;
+                    //This handle is needed to get the current background attribute
+
+                    HANDLE hStdOut1 = GetStdHandle(STD_OUTPUT_HANDLE);
+                    CONSOLE_SCREEN_BUFFER_INFO csbi1;
+                    //csbi is used for wAttributes word
+
+                    if(GetConsoleScreenBufferInfo(hStdOut, &csbi1)){
+                        //To mask out all but the background attribute, and to add the color
+                        wColor1 = (csbi.wAttributes & 0xF0) + (ForgC & 0x0F);
+                        SetConsoleTextAttribute(hStdOut, wColor1);
+                    }
+
+                    printf("\nPlease enter a valid number! from 1 to 20.");
+
+                    ForgC=0;
+                    WORD wColor2;
+                    //This handle is needed to get the current background attribute
+
+                    HANDLE hStdOut2 = GetStdHandle(STD_OUTPUT_HANDLE);
+                    CONSOLE_SCREEN_BUFFER_INFO csbi2;
+                    //csbi is used for wAttributes word
+
+                    if(GetConsoleScreenBufferInfo(hStdOut2, &csbi2)){
+                        //To mask out all but the background attribute, and to add the color
+                        wColor2 = (csbi2.wAttributes & 0xF0) + (ForgC & 0x0F);
+                        SetConsoleTextAttribute(hStdOut2, wColor2);
+                    }
+                    scanf("%d",&n);
+                    printf("\n");
+                }
 
                 printf("The factorial of %d is: %I64d.\n",n,factorial(n));
 
@@ -221,6 +255,23 @@ int main(){
             case 6:{
                 printf("\n\nWe are now performing 'Fibonacci Series'.\n");
                 printf("How many terms do you want the series up to? ");
+                int n1;
+                scanf("%d",&n1);
+                if(n1<1){
+                    printf("Please enter a valid number! Above 0.");
+                    scanf("%d",&n1);
+                }
+
+                printf("You entered %d and the series is as below:\n",n1);
+                for(int i=1;i<=n1;i++){
+                    if(i<n1){
+                        printf("%d, ",FibonacciSeries(i));
+                    }
+                    else{
+                        printf("%d.\n",FibonacciSeries(i));
+                    }
+                }
+
                 printf("\n");
                 break;
             }
@@ -339,10 +390,21 @@ insertionSort(int n1,int arr1[]){
 long long int factorial(int n1){
     if(n1==0){
         return 1;
-
     }
 
     else{
         return n1*factorial(n1-1);
+    }
+}
+
+int FibonacciSeries(int n){
+    if(n==1){
+        return 0;
+    }
+    else if(n==2){
+        return 1;
+    }
+    else{
+        return FibonacciSeries(n-2)+FibonacciSeries(n-1);
     }
 }
