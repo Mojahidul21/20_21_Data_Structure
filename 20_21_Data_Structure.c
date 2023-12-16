@@ -9,6 +9,8 @@ void insertionSort(int,int);
 long long int factorial(int);
 int FibonacciSeries(int);
 void ToH(int, char, char, char);
+void StackOperations();
+
 
 int main(){
     int select;
@@ -37,6 +39,7 @@ int main(){
         printf("    *  2. Bubble Sort            3. Binary Search       *\n");
         printf("    *  4. Insertion Sort         5. Factorial           *\n");
         printf("    *  6. Fibonacci Series       7. Tower of Hanoi      *\n");
+        printf("    *  8. Stack Operations                              *\n");
         printf("    *                                                   *\n");
         printf("     *************************************************** \n");
         printf("                                                         \n");
@@ -355,6 +358,14 @@ int main(){
                 break;
             }
 
+            case 8:{
+                printf("\n\nWe are now performing 'Stack Operations'.");
+                StackOperations();
+
+                printf("\n");
+                break;
+            }
+
             default:{
                 ForgC=12;
                 WORD wColor1;
@@ -499,4 +510,77 @@ ToH(int n1,char from_peg,char to_peg,char aux_peg){
     ToH(n1-1, from_peg, aux_peg, to_peg);
     printf("\nMove disk-%d from peg-%c to peg-%c",n1,from_peg,to_peg);
     ToH(n1-1,aux_peg,to_peg,from_peg);
+}
+
+StackOperations(){
+    printf("\nPlease type the maximum number of element(s) in your stack: ");
+    int n;
+    scanf("%d",&n);
+    printf("\nPlease select your desired index from the menu below:");
+    printf("\n0. Exit from Stack Operations   1. push()");
+    printf("\n2. pop()                        3. peek()");
+    printf("\n4. Show the Stack                      \n");
+
+    int stack[n],i,j,option=6,top=-1;
+    scanf("%d",&option);
+
+    while(option!=0){
+        switch(option){
+            case 0:{
+                printf("Exiting");
+                break;
+            }
+
+            case 1:{
+                if (top == n-1 ){
+                    printf("\n Overflow!");
+                }
+                else{
+                    printf("\nEnter the value: ");
+                    int value;
+                    scanf("%d",&value);
+                    top++;
+                    stack[top]=value;
+                }
+                break;
+            }
+
+            case 2:{
+                if(top == -1){
+                    printf("\nUnderflow!");
+                }
+                else{
+                    top--;
+                }
+                break;
+            }
+
+            case 3:{
+                if(top == -1){
+                    printf("Stack is empty");
+                }
+                else{
+                    printf("\n%d",stack[top]);
+                }
+                break;
+            }
+
+            case 4:{
+                if(top == -1){
+                    printf("Stack is empty");
+                }
+                else{
+                    for (i=top;i>=0;i--){
+                        printf("%d\n",stack[i]);
+                    }
+                }
+
+                break;
+            }
+
+            default:{
+                printf("Please Enter valid option");
+            }
+        };
+    }
 }
