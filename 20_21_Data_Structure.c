@@ -513,27 +513,25 @@ ToH(int n1,char from_peg,char to_peg,char aux_peg){
 }
 
 StackOperations(){
+    int stack[50],i,j,option=7,n,top=-1;
     printf("\nPlease type the maximum number of element(s) in your stack: ");
-    int n;
     scanf("%d",&n);
-    printf("\nPlease select your desired index from the menu below:");
-    printf("\n0. Exit from Stack Operations   1. push()");
-    printf("\n2. pop()                        3. peek()");
-    printf("\n4. Show the Stack                      \n");
-
-    int stack[n],i,j,option=6,top=-1;
-    scanf("%d",&option);
 
     while(option!=0){
+        printf("\nPlease select your desired index from the menu below:");
+        printf("\n0. Exit from Stack Operations   1. push()");
+        printf("\n2. pop()                        3. peek()");
+        printf("\n4. Show the Stack                      \n");
+        scanf("%d",&option);
         switch(option){
             case 0:{
-                printf("Exiting");
+                printf("Exiting from Stack Operation! And enjoy the main menu!");
                 break;
             }
 
             case 1:{
                 if (top == n-1 ){
-                    printf("\n Overflow!");
+                    printf("\nOverflow!");
                 }
                 else{
                     printf("\nEnter the value: ");
