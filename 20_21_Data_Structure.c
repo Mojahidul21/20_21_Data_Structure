@@ -513,29 +513,43 @@ ToH(int n1,char from_peg,char to_peg,char aux_peg){
 }
 
 StackOperations(){
-    int stack[50],i,j,option=7,n,top=-1;
-    printf("\nPlease type the maximum number of element(s) in your stack: ");
+    int option,top=-1,value;
+    printf("\n\nPlease type the maximum number of element(s) in your stack: ");
+    int n;
     scanf("%d",&n);
+    int stack[n];
 
-    while(option!=0){
-        printf("\nPlease select your desired index from the menu below:");
+    do{
+        printf("\nPlease select your desired index from the menu below:\n");
         printf("\n0. Exit from Stack Operations   1. push()");
         printf("\n2. pop()                        3. peek()");
-        printf("\n4. Show the Stack                      \n");
+        printf("\n4. Show the Stack                    \n\n");
         scanf("%d",&option);
         switch(option){
             case 0:{
-                printf("Exiting from Stack Operation! And enjoy the main menu!");
+                printf("\nYou selected 0. Exit from Stack Operations\n");
+                printf("\nExiting from Stack Operation! And entering the main menu!");
                 break;
             }
 
             case 1:{
+                printf("\nYou selected 1. push()\n");
                 if (top == n-1 ){
-                    printf("\nOverflow!");
+                    printf("\nOverflow! To push a new element, you must pop first!\n");
                 }
                 else{
-                    printf("\nEnter the value: ");
-                    int value;
+                    if(top==-1){
+                        printf("\nEnter the 1st element: ");
+                    }
+                    else if(top==0){
+                        printf("\nEnter the 2nd element: ");
+                    }
+                    else if(top==1){
+                        printf("\nEnter the 3rd element: ");
+                    }
+                    else{
+                        printf("\nEnter the %dth element: ",top+2);
+                    }
                     scanf("%d",&value);
                     top++;
                     stack[top]=value;
@@ -544,18 +558,32 @@ StackOperations(){
             }
 
             case 2:{
+                printf("\nYou selected 2. pop()\n");
                 if(top == -1){
                     printf("\nUnderflow!");
                 }
                 else{
+                    if(top==0){
+                        printf("\nThe top (1st) element %d is now being pop.\n",stack[top]);
+                    }
+                    else if(top==1){
+                        printf("\nThe top (2nd) element %d is now being pop.\n",stack[top]);
+                    }
+                    else if(top==2){
+                        printf("\nThe top (3rd) element %d is now being pop.\n",stack[top]);
+                    }
+                    else{
+                        printf("\nThe top (%dth) element %d is now being pop.\n",top+1,stack[top]);
+                    }
                     top--;
                 }
                 break;
             }
 
             case 3:{
+                printf("\nYou selected 3. peek()\n");
                 if(top == -1){
-                    printf("Stack is empty");
+                    printf("\nStack is empty!\n");
                 }
                 else{
                     printf("\n%d",stack[top]);
@@ -564,11 +592,12 @@ StackOperations(){
             }
 
             case 4:{
+                printf("\nYou selected 4. Show the Stack\n\n");
                 if(top == -1){
-                    printf("Stack is empty");
+                    printf("Stack is empty!\n");
                 }
                 else{
-                    for (i=top;i>=0;i--){
+                    for (int i=top;i>=0;i--){
                         printf("%d\n",stack[i]);
                     }
                 }
@@ -577,8 +606,9 @@ StackOperations(){
             }
 
             default:{
-                printf("Please Enter valid option");
+                printf("\nPlease enter a valid option!\n");
             }
         };
     }
+    while(option!=0);
 }
