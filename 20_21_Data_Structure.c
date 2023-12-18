@@ -1,6 +1,7 @@
 # include<stdio.h>
 # include <windows.h>
-# include <math.h>
+# include <math.h>  //for calculating number of moves in ToH 2^n-1
+#include<stdlib.h>  //for linked list operations
 
 void linearSearch(int,int,int);
 void bubbleSort(int,int);
@@ -10,6 +11,14 @@ long long int factorial(int);
 int FibonacciSeries(int);
 void ToH(int, char, char, char);
 void StackOperations();
+void SingleLinkedListOperations();
+
+struct node
+{
+    int data;
+    struct node *next;
+};
+struct node *head;
 
 
 int main(){
@@ -39,7 +48,7 @@ int main(){
         printf("    *  2. Bubble Sort            3. Binary Search       *\n");
         printf("    *  4. Insertion Sort         5. Factorial           *\n");
         printf("    *  6. Fibonacci Series       7. Tower of Hanoi      *\n");
-        printf("    *  8. Stack Operations                              *\n");
+        printf("    *  8. Stack Operations       9. S.L. List Operations*\n");
         printf("    *                                                   *\n");
         printf("     *************************************************** \n");
         printf("                                                         \n");
@@ -366,6 +375,14 @@ int main(){
                 break;
             }
 
+            case 9:{
+                printf("\n\nWe are now performing 'Singly Linked List Operations'.");
+                SingleLinkedListOperations();
+
+                printf("\n");
+                break;
+            }
+
             default:{
                 ForgC=12;
                 WORD wColor1;
@@ -602,6 +619,236 @@ StackOperations(){
                     }
                 }
 
+                break;
+            }
+
+            default:{
+                printf("\nPlease enter a valid option!\n");
+            }
+        };
+    }
+    while(option!=0);
+}
+
+SingleLinkedListOperations(){
+    int option;
+
+    do{
+        printf("\n\nPlease select your desired index from the menu below:              \n");
+        printf("\n0. Exit from S.L.L. Operations    1. Insert at Beginning           \n");
+        printf("\n2. Insert at End                  3. Insert after Specific Location\n");
+        printf("\n4. Delete from Beginning          5. Delete from End               \n");
+        printf("\n6. Delete after Specific Location 7. Search                        \n");
+        printf("\n8. Show the List                                                 \n\n");
+        scanf("%d",&option);
+        switch(option){
+            case 0:{
+                printf("\nYou selected 0. Exit from S.L.L. Operations\n");
+                printf("\nExiting from Single Link List Operation! And entering the main menu!");
+                break;
+            }
+
+            case 1:{
+                printf("\nYou selected 1. Insert at Beginning.\n");
+                struct node *ptr;
+                int item;
+                ptr = (struct node *) malloc(sizeof(struct node *));
+
+                if(ptr == NULL){
+                    printf("\nOverflow!");
+                }
+                else{
+                    printf("\nPlease enter the value: ");
+                    scanf("%d",&item);
+                    ptr->data = item;
+                    ptr->next = head;
+                    head = ptr;
+                    printf("\nNode inserted.\n");
+                }
+                break;
+            }
+
+            case 2:{
+                printf("\nYou selected 2. Insert at End\n");
+                struct node *ptr,*temp;
+                int item;
+                ptr = (struct node*)malloc(sizeof(struct node));
+
+                if(ptr == NULL){
+                    printf("\nOverflow!");
+                }
+                else{
+                    printf("\nPlease enter the value: ");
+                    scanf("%d",&item);
+                    ptr->data = item;
+
+                    if(head == NULL){
+                        ptr -> next = NULL;
+                        head = ptr;
+                        printf("\nOne new node inserted.\n");
+                    }
+                    else{
+                        temp = head;
+                        while (temp -> next != NULL){
+                            temp = temp -> next;
+                        }
+
+                        temp->next = ptr;
+                        ptr->next = NULL;
+                        printf("\nOne new node inserted.\n");
+                    }
+                }
+                break;
+            }
+
+            case 3:{
+                printf("\nYou selected 3. Insert after Specific Location\n");
+                int i,loc,item;
+                struct node *ptr, *temp;
+                ptr = (struct node *) malloc (sizeof(struct node));
+
+                if(ptr == NULL){
+                    printf("\nOverflow!");
+                }
+                else{
+                    printf("\nPlease enter the value: ");
+                    scanf("%d",&item);
+                    ptr->data = item;
+                    printf("\nEnter the location after which you want to insert: ");
+                    scanf("\n%d",&loc);
+                    temp=head;
+
+                    for(i=0;i<loc;i++){
+                        temp = temp->next;
+
+                        if(temp == NULL){
+                            printf("\nCannot be inserted!\n");
+                            return;
+                        }
+                    }
+
+                    ptr ->next = temp ->next;
+                    temp ->next = ptr;
+                    printf("\nOne new node inserted.\n");
+                }
+                break;
+            }
+
+            case 4:{
+                printf("\nYou selected 4. Delete from Beginning\n");
+                struct node *ptr;
+                if(head == NULL){
+                    printf("\nList is empty!\n");
+                }
+                else{
+                    ptr = head;
+                    head = ptr->next;
+                    free(ptr);
+                    printf("\nNode deleted from the beginning.\n");
+                }
+                break;
+            }
+
+            case 5:{
+                printf("\nYou selected 5. Delete from End\n");
+                struct node *ptr,*ptr1;
+                if(head == NULL){
+                    printf("\nList is empty!\n");
+                }
+                else if(head -> next == NULL){
+                    head = NULL;
+                    free(head);
+                    printf("\nOnly node of the list deleted.\n");
+                }
+                else{
+                    ptr = head;
+
+                    while(ptr->next != NULL){
+                        ptr1 = ptr;
+                        ptr = ptr ->next;
+                    }
+
+                    ptr1->next = NULL;
+                    free(ptr);
+                    printf("\nDeleted node from the last.\n");
+                }
+                break;
+            }
+
+            case 6:{
+                printf("\nYou selected 6. Delete after Specific Location.\n");
+                struct node *ptr,*ptr1;
+                int loc,i;
+                printf("\nEnter the location after you want to delete: ");
+                scanf("%d",&loc);
+                ptr=head;
+
+                for(i=0;i<loc;i++){
+                    ptr1 = ptr;
+                    ptr = ptr->next;
+
+                    if(ptr == NULL){
+                        printf("\nCannot be inserted!\n");
+                        return;
+                    }
+                }
+
+                ptr1 ->next = ptr ->next;
+                free(ptr);
+                printf("\nDeleted node from the %d.\n",loc+1);
+
+                break;
+            }
+
+            case 7:{
+                printf("\nYou selected 7. Search.\n");
+                struct node *ptr;
+                int item,i=0,flag;
+                ptr = head;
+
+                if(ptr == NULL){
+                    printf("\nList is empty!\n");
+                }
+                else{
+                    printf("\nPlease enter what you want to search: ");
+                    scanf("%d",&item);
+
+                    while (ptr!=NULL){
+                        if(ptr->data == item){
+                            printf("It is found at the location %d.\n",i+1);
+                            flag=0;
+                        }
+                        else{
+                            flag=1;
+                        }
+                        i++;
+                        ptr = ptr -> next;
+                    }
+
+                    if(flag==1){
+                        printf("\nIt is not found!\n");
+                    }
+                }
+
+                break;
+            }
+
+            case 8:{
+                printf("\nYou selected 8. Show the List\n");
+                struct node *ptr;
+                ptr = head;
+
+                if(ptr == NULL){
+                    printf("\nList is empty! Nothing to print!\n");
+                }
+                else{
+                    printf("\nThe list is as below:\n");
+
+                    while (ptr!=NULL){
+                        printf("\n%d",ptr->data);
+                        ptr = ptr -> next;
+                    }
+                }
                 break;
             }
 
