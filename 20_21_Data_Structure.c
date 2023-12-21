@@ -1,7 +1,7 @@
 # include<stdio.h>
 # include <windows.h>
 # include <math.h>  //for calculating number of moves in ToH 2^n-1
-#include<stdlib.h>  //for linked list operations
+#include<stdlib.h>  //for operations related to linked list
 
 void linearSearch(int,int,int);
 void bubbleSort(int,int);
@@ -11,7 +11,8 @@ long long int factorial(int);
 int FibonacciSeries(int);
 void ToH(int, char, char, char);
 void StackOperations();
-void SingleLinkedListOperations();
+void SinglyLinkedListOperations();
+void TraverseLinkedList();
 
 struct node
 {
@@ -48,7 +49,8 @@ int main(){
         printf("    *  2. Bubble Sort            3. Binary Search       *\n");
         printf("    *  4. Insertion Sort         5. Factorial           *\n");
         printf("    *  6. Fibonacci Series       7. Tower of Hanoi      *\n");
-        printf("    *  8. Stack Operations       9. S.L. List Operations*\n");
+        printf("    *  8. Stack Operations       9. SLL Operations      *\n");
+        printf("    *  10. Traversing Linked List                       *\n");
         printf("    *                                                   *\n");
         printf("     *************************************************** \n");
         printf("                                                         \n");
@@ -377,7 +379,15 @@ int main(){
 
             case 9:{
                 printf("\n\nWe are now performing 'Singly Linked List Operations'.");
-                SingleLinkedListOperations();
+                SinglyLinkedListOperations();
+
+                printf("\n");
+                break;
+            }
+
+            case 10:{
+                printf("\n\nWe are now performing 'Traverse Linked List'.");
+                TraverseLinkedList();
 
                 printf("\n");
                 break;
@@ -630,7 +640,7 @@ StackOperations(){
     while(option!=0);
 }
 
-SingleLinkedListOperations(){
+SinglyLinkedListOperations(){
     int option;
 
     do{
@@ -858,4 +868,216 @@ SingleLinkedListOperations(){
         };
     }
     while(option!=0);
+}
+
+TraverseLinkedList(){
+    int choice;
+
+    do{
+        // Node structure for singly linked list
+        struct Node {
+            int data;
+            struct Node* next;
+        };
+
+        // Node structure for doubly linked list
+        struct DoubleNode {
+            int data;
+            struct DoubleNode* next;
+            struct DoubleNode* prev;
+        };
+
+        struct Node* singlyLinkedList = NULL;
+        struct DoubleNode* doublyLinkedList = NULL;
+        struct Node* singlyCircularLinkedList = NULL;
+        struct DoubleNode* doublyCircularLinkedList = NULL;
+
+        printf("\n\nPlease select your desired index from the menu below:\n");
+        printf("\n0. Exit from Traverse Linked List\n");
+        printf("\n1. Traverse Singly Linked List\n");
+        printf("\n2. Traverse Doubly Linked List\n");
+        printf("\n3. Traverse Singly-Linked Circular Linked List\n");
+        printf("\n4. Traverse Doubly-Linked Circular Linked List\n\n");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 0:{
+                printf("\nYou selected 0. Exit from Traverse Linked List\n");
+                printf("\nExiting from Traverse Linked List! And entering the main menu!");
+
+                break;
+            }
+
+            case 1:{
+                // Create and Traverse Singly Linked List
+                struct Node* temp;
+                int num;
+
+                printf("\nEnter the number of nodes for your Singly Linked List: ");
+                scanf("%d", &num);
+
+                printf("\nEnter the data for each node (separated by space and press enter after the last one):\n");
+                for (int i = 0; i < num; ++i) {
+                        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                        scanf("%d", &newNode->data);
+                        newNode->next = NULL;
+
+                        if (singlyLinkedList == NULL) {
+                            singlyLinkedList = newNode;
+                            temp = newNode;
+                        } else {
+                            temp->next = newNode;
+                            temp = newNode;
+                        }
+                }
+
+                // Traverse and Print Singly Linked List
+                printf("\nYour entered Singly Linked List as below: \n");
+
+                temp = singlyLinkedList;
+                while (temp != NULL) {
+                    printf("%d -> ", temp->data);
+                    temp = temp->next;
+                }
+
+                printf("NULL\n");
+                break;
+            }
+
+            case 2:{
+                // Create and Traverse Doubly Linked List
+
+                struct DoubleNode* temp;
+                int num;
+
+                printf("\nEnter the number of nodes for your Doubly Linked List: ");
+                scanf("%d", &num);
+
+                printf("\nEnter the data for each node (separated by space and press enter after the last one):\n");
+
+                for (int i = 0; i < num; ++i) {
+                    struct DoubleNode* newNode = (struct DoubleNode*)malloc(sizeof(struct DoubleNode));
+                    scanf("%d", &newNode->data);
+                    newNode->next = NULL;
+                    newNode->prev = NULL;
+
+                    if (doublyLinkedList == NULL) {
+                        doublyLinkedList = newNode;
+                        temp = newNode;
+                    }
+                    else{
+                        temp->next = newNode;
+                        newNode->prev = temp;
+                        temp = newNode;
+                    }
+                }
+
+                // Traverse and Print Doubly Linked List
+                printf("\nYour entered Doubly Linked List as below: \n");
+                temp = doublyLinkedList;
+
+                while (temp != NULL) {
+                    printf("%d <-> ", temp->data);
+                    temp = temp->next;
+                }
+
+                printf("NULL\n");
+
+                break;
+            }
+
+            case 3:{
+                // Create and Traverse Singly-Linked Circular Linked List
+
+                struct Node* temp;
+                int num;
+
+                printf("\nEnter the number of nodes for your Singly-Linked Circular Linked List: ");
+                scanf("%d", &num);
+
+                printf("\nEnter the data for each node (separated by space and press enter after the last one):\n");
+
+                for (int i = 0; i < num; ++i) {
+                    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                    scanf("%d", &newNode->data);
+                    newNode->next = NULL;
+
+                    if (singlyCircularLinkedList == NULL) {
+                        singlyCircularLinkedList = newNode;
+                        temp = newNode;
+                        newNode->next = newNode;  // Circular link
+                    }
+                    else {
+                        temp->next = newNode;
+                        temp = newNode;
+                        newNode->next = singlyCircularLinkedList;  // Circular link
+                    }
+                }
+
+                // Traverse and Print Singly-Linked Circular Linked List
+                printf("\nYour entered Singly-Linked Circular Linked List as below: \n");
+                temp = singlyCircularLinkedList;
+
+                do {
+                    printf("%d -> ", temp->data);
+                    temp = temp->next;
+                }
+                while (temp != singlyCircularLinkedList);
+                printf("(head)\n");
+
+                break;
+            }
+
+            case 4:{
+                // Create and Traverse Doubly-Linked Circular Linked List
+
+                struct DoubleNode* temp;
+                int num;
+
+                printf("\nEnter the number of nodes for your Doubly-Linked Circular Linked List: ");
+                scanf("%d", &num);
+
+                printf("\nEnter the data for each node (separated by space and press enter after the last one):\n");
+
+                for (int i = 0; i < num; ++i) {
+                    struct DoubleNode* newNode = (struct DoubleNode*)malloc(sizeof(struct DoubleNode));
+                    scanf("%d", &newNode->data);
+                    newNode->next = NULL;
+                    newNode->prev = NULL;
+
+                    if (doublyCircularLinkedList == NULL) {
+                        doublyCircularLinkedList = newNode;
+                        temp = newNode;
+                        newNode->next = newNode;  // Circular link
+                        newNode->prev = newNode;  // Circular link
+                    }
+                    else {
+                        temp->next = newNode;
+                        newNode->prev = temp;
+                        temp = newNode;
+                        newNode->next = doublyCircularLinkedList;  // Circular link
+                        doublyCircularLinkedList->prev = newNode;  // Circular link
+                    }
+                }
+
+                // Traverse and Print Doubly-Linked Circular Linked List
+                printf("\nYour entered Doubly-Linked Circular Linked List as below: \n");
+                temp = doublyCircularLinkedList;
+                do {
+                    printf("%d <-> ", temp->data);
+                    temp = temp->next;
+                }
+                while (temp != doublyCircularLinkedList);
+
+                printf("(head)\n");
+
+                break;
+            }
+
+            default:{
+                printf("\nPlease enter a valid option!\n");
+            }
+        };
+
+    } while (choice != 0);
 }
