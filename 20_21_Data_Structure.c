@@ -1,7 +1,7 @@
 # include<stdio.h>
 # include <windows.h>
 # include <math.h>  //for calculating number of moves in ToH 2^n-1
-#include<stdlib.h>  //for operations related to linked list
+#include<stdlib.h>  //for operations related to linked list, queue etc.
 
 void linearSearch(int,int,int);
 void bubbleSort(int,int);
@@ -13,6 +13,7 @@ void ToH(int, char, char, char);
 void StackOperations();
 void SinglyLinkedListOperations();
 void TraverseLinkedList();
+void QueueOperations();
 
 struct node
 {
@@ -40,20 +41,20 @@ int main(){
             SetConsoleTextAttribute(hStdOut, wColor);
         }
 
-        printf("                                                         \n");
-        printf("                          ******                         \n");
-        printf("     ********************* MENU ************************ \n");
-        printf("    *                     ******                        *\n");
-        printf("    *                                                   *\n");
-        printf("    *  0. End                    1. Linear Search       *\n");
-        printf("    *  2. Bubble Sort            3. Binary Search       *\n");
-        printf("    *  4. Insertion Sort         5. Factorial           *\n");
-        printf("    *  6. Fibonacci Series       7. Tower of Hanoi      *\n");
-        printf("    *  8. Stack Operations       9. SLL Operations      *\n");
-        printf("    *  10. Traversing Linked List                       *\n");
-        printf("    *                                                   *\n");
-        printf("     *************************************************** \n");
-        printf("                                                         \n");
+        printf("                                                           \n");
+        printf("                           ******                          \n");
+        printf("     ********************** MENU ************************* \n");
+        printf("    *                      ******                         *\n");
+        printf("    *                                                     *\n");
+        printf("    *   0. End                      1. Linear Search      *\n");
+        printf("    *   2. Bubble Sort              3. Binary Search      *\n");
+        printf("    *   4. Insertion Sort           5. Factorial          *\n");
+        printf("    *   6. Fibonacci Series         7. Tower of Hanoi     *\n");
+        printf("    *   8. Stack Operations         9. SLL Operations     *\n");
+        printf("    *  10. Traversing Linked List  11. Queue Operations   *\n");
+        printf("    *                                                     *\n");
+        printf("     ***************************************************** \n");
+        printf("                                                           \n");
 
         printf("     Please enter your job index as per the above menu: ");
         scanf("%d",&select);
@@ -388,6 +389,14 @@ int main(){
             case 10:{
                 printf("\n\nWe are now performing 'Traverse Linked List'.");
                 TraverseLinkedList();
+
+                printf("\n");
+                break;
+            }
+
+            case 11:{
+                printf("\n\nWe are now performing 'Queue Operations'.");
+                QueueOperations();
 
                 printf("\n");
                 break;
@@ -1079,5 +1088,161 @@ TraverseLinkedList(){
             }
         };
 
-    } while (choice != 0);
+    }
+    while (choice != 0);
+}
+
+QueueOperations(){
+    struct Queue {
+        int front, rear;
+        int *elements;
+        int maxSize;
+    } queue;
+
+    queue.front = -1;
+    queue.rear = -1;
+
+    printf("Please enter the maximum size of the queue: ");
+    scanf("%d", &queue.maxSize);
+
+    // Allocate memory for queue elements
+    queue.elements = (int *)malloc(queue.maxSize * sizeof(int));
+
+    if (queue.elements == NULL) {
+        printf("Memory allocation error. Exiting now!\n");
+        return 1;
+    }
+
+    int choice, element;
+
+    do {
+        printf("\nPlease see the menu below and then choose your option.\n\n");
+        printf("0. Exit from Queue Operations\n");
+        printf("1. Enqueue (Insert) Element\n");
+        printf("2. Dequeue (Remove) Element\n");
+        printf("3. Peek Front Element\n");
+        printf("4. Check if Queue is Empty\n");
+        printf("5. Check if Queue is Full\n");
+        printf("6. Display Queue\n");
+        printf("\nEnter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 0:{
+                printf("\nYou selected 0. Exit from Queue Operations\n");
+                printf("\nExiting from Queue Operations! And entering the main menu!");
+
+                break;
+            }
+
+            case 1:{
+                // Enqueue (Insert) Element
+                if ((queue.rear + 1) % queue.maxSize == queue.front) {
+                    printf("Queue is full! Cannot be enqueued!\n");
+                }
+                else {
+                    printf("Enter the element to enqueue: ");
+                    scanf("%d", &element);
+
+                    if (queue.front == -1) {
+                        queue.front = 0; // Set front to 0 if the queue was empty
+                    }
+
+                    queue.rear = (queue.rear + 1) % queue.maxSize;
+                    queue.elements[queue.rear] = element;
+
+                    printf("Enqueued %d successfully.\n", element);
+                }
+
+                break;
+            }
+
+            case 2:{
+                // Dequeue (Remove) Element
+                if (queue.front == -1) {
+                    printf("Queue is empty! Cannot be dequeued!\n");
+                }
+                else {
+                    element = queue.elements[queue.front];
+
+                    if (queue.front == queue.rear) {
+                        // Reset front and rear to -1 if the last element is dequeued
+                        queue.front = -1;
+                        queue.rear = -1;
+                    }
+                    else {
+                        queue.front = (queue.front + 1) % queue.maxSize;
+                    }
+
+                    printf("Dequeued %d successfully.\n", element);
+                }
+
+                break;
+            }
+
+            case 3:{
+                // Peek Front Element
+                if (queue.front == -1) {
+                    printf("Queue is empty! Cannot be peeked!\n");
+                }
+                else {
+                    printf("Front element of the queue is: %d\n", queue.elements[queue.front]);
+                }
+
+                break;
+            }
+
+            case 4:{
+                // Check if Queue is Empty
+                if (queue.front == -1) {
+                    printf("The queue is empty!\n");
+                }
+                else {
+                    printf("The queue is not empty!\n");
+                }
+
+                break;
+            }
+
+            case 5:{
+                // Check if Queue is Full
+                if ((queue.rear + 1) % queue.maxSize == queue.front) {
+                    printf("The queue is full!\n");
+                }
+                else {
+                    printf("The queue is not full!\n");
+                }
+
+                break;
+            }
+
+            case 6:{
+                // Display Queue
+                if (queue.front == -1) {
+                    printf("The queue is empty!\n");
+                }
+                else {
+                    printf("The queue is as follows:\n");
+                    int i = queue.front;
+                    do {
+                        printf("%d ", queue.elements[i]);
+                        i = (i + 1) % queue.maxSize;
+                    }
+                    while (i != (queue.rear + 1) % queue.maxSize);
+
+                    printf("\n");
+                }
+
+                break;
+            }
+
+            default:
+                printf("\nPlease enter a valid option!\n");
+        }
+
+    }
+    while (choice != 0);
+
+    // Free allocated memory
+    free(queue.elements);
 }
