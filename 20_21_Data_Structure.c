@@ -1,8 +1,10 @@
-//Printing in console is black as default here. So console background color should be white to enhance visibility.
-# include<stdio.h>
-# include <windows.h>
-# include <math.h>  //for calculating number of moves in ToH 2^n-1
-#include<stdlib.h>  //for operations related to linked list, queue etc.
+//Printing in console is black as default here.
+//So console background color should be white to enhance visibility.
+
+# include<stdio.h>      //For conducting input and output operations
+# include <windows.h>   //For colored text in the console panel
+# include <math.h>      //For calculating number of moves in ToH 2^n-1
+#include<stdlib.h>      //For using utility functions such as memory allocation
 
 void linearSearch(int,int,int);
 void bubbleSort(int,int);
@@ -16,12 +18,15 @@ void SinglyLinkedListOperations();
 void TraverseLinkedList();
 void QueueOperations();
 void MergeSort();
+void QuickSort();
 
-struct node
-{
+// Node structure for a singly linked list
+struct node{
     int data;
     struct node *next;
 };
+
+// Head of the linked list
 struct node *head;
 
 
@@ -43,21 +48,21 @@ int main(){
             SetConsoleTextAttribute(hStdOut, wColor);
         }
 
-        printf("                                                           \n");
-        printf("                           ******                          \n");
-        printf("     ********************** MENU ************************* \n");
-        printf("    *                      ******                         *\n");
-        printf("    *                                                     *\n");
-        printf("    *   0. End                      1. Linear Search      *\n");
-        printf("    *   2. Bubble Sort              3. Binary Search      *\n");
-        printf("    *   4. Insertion Sort           5. Factorial          *\n");
-        printf("    *   6. Fibonacci Series         7. Tower of Hanoi     *\n");
-        printf("    *   8. Stack Operations         9. SLL Operations     *\n");
-        printf("    *  10. Traversing Linked List  11. Queue Operations   *\n");
-        printf("    *  12. Merge Sort              13. Quick Sort         *\n");
-        printf("    *                                                     *\n");
-        printf("     ***************************************************** \n");
-        printf("                                                           \n");
+        printf("                                                            \n");
+        printf("                             ******                         \n");
+        printf("     ************************ MENU ************************ \n");
+        printf("    *                        ******                        *\n");
+        printf("    *                                                      *\n");
+        printf("    *   0. End                      1. Linear Search       *\n");
+        printf("    *   2. Bubble Sort              3. Binary Search       *\n");
+        printf("    *   4. Insertion Sort           5. Factorial           *\n");
+        printf("    *   6. Fibonacci Series         7. Tower of Hanoi      *\n");
+        printf("    *   8. Stack Operations         9. SLL Operations      *\n");
+        printf("    *  10. Traversing Linked List  11. Queue Operations    *\n");
+        printf("    *  12. Merge Sort              13. Quick Sort          *\n");
+        printf("    *                                                      *\n");
+        printf("     ****************************************************** \n");
+        printf("                                                            \n");
 
         printf("     Please enter your job index as per the above menu: ");
         scanf("%d",&select);
@@ -365,7 +370,7 @@ int main(){
 
                 printf("Note-1: Disks are marked 1, 2, 3, ... from top to bottom.");
                 printf("\nNote-2: Pegs are marked A, B, C from left to right (smallest to biggest.");
-                printf("\nNote-3: Total disk(s) = n = %d and so total move(s) = 2^n - 1 = 2^%d - 1 = %.0lf.",n,n,pow(2,n)-1);
+                printf("\nNote-3: Total disk(s) = n = %d and so total minimum move(s) = 2^n - 1 = 2^%d - 1 = %.0lf.",n,n,pow(2,n)-1);
                 printf("\nThe step by step moves are as follows -");
                 ToH(n,'A','C','B');
 
@@ -408,6 +413,14 @@ int main(){
             case 12:{
                 printf("\n\nWe are now performing 'Merge Sort'.");
                 MergeSort();
+
+                printf("\n");
+                break;
+            }
+
+            case 13:{
+                printf("\n\nWe are now performing 'Quick Sort'.");
+                QuickSort();
 
                 printf("\n");
                 break;
@@ -633,7 +646,7 @@ StackOperations(){
                     printf("\nStack is empty!\n");
                 }
                 else{
-                    printf("\n%d",stack[top]);
+                    printf("\n%d\n",stack[top]);
                 }
                 break;
             }
@@ -1113,7 +1126,7 @@ QueueOperations(){
     queue.front = -1;
     queue.rear = -1;
 
-    printf("Please enter the maximum size of the queue: ");
+    printf("\nPlease enter the maximum size of the queue: ");
     scanf("%d", &queue.maxSize);
 
     // Allocate memory for queue elements
@@ -1356,4 +1369,111 @@ MergeSort(){
 
     // Free allocated memory
     free(arr);
+}
+
+QuickSort(){
+int size;
+
+    // Get the number of elements from the user
+    printf("\nEnter the total number of elements: ");
+    scanf("%d", &size);
+    printf("\n");
+
+    int arr[size];
+
+    // Get elements from the user
+    for (int i = 0; i < size; i++) {
+        printf("Enter the %dth element: ", i + 1);
+        scanf("%d", &arr[i]);
+    }
+
+    printf("\nYou entered the array as: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n\n");
+
+    // Perform QuickSort
+    // Initial values for low and high are 0 and size - 1, respectively
+    int stack[size];
+    int top = -1;
+    stack[++top] = 0;
+    stack[++top] = size - 1;
+
+    int iteration = 1;
+
+    while (top >= 0) {
+        // Pop high and low
+        int high = stack[top--];
+        int low = stack[top--];
+
+        // Choose the rightmost element as the pivot
+        int pivot = arr[high];
+
+        // Initialize the index of the smaller element
+        int i = low - 1;
+
+        // Traverse the array and rearrange elements such that
+        // elements smaller than the pivot are on the left,
+        // and elements greater than the pivot are on the right
+        for (int j = low; j < high; j++) {
+            if (arr[j] < pivot) {
+                i++;
+
+                // Swap arr[i] and arr[j]
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+        // Swap the pivot element with the element at index (i + 1)
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = temp;
+
+        // Print the state before and after the current iteration
+        printf("Iteration-%d:\n", iteration);
+        printf("    Before: ");
+        for (int k = 0; k < size; k++) {
+            printf("%d ", arr[k]);
+        }
+        printf("\n");
+        printf("    Left Sub-array: ");
+        for (int k = low; k < i + 1; k++) {
+            printf("%d ", arr[k]);
+        }
+        printf("    Pivot: %d    Right Sub-array: ", arr[i + 1]);
+        for (int k = i + 2; k <= high; k++) {
+            printf("%d ", arr[k]);
+        }
+        printf("\n");
+
+        iteration++;
+
+        // If there are elements on the left of the pivot, push them to the stack
+        if (i > low) {
+            stack[++top] = low;
+            stack[++top] = i;
+        }
+
+        // If there are elements on the right of the pivot, push them to the stack
+        if (i + 2 < high) {
+            stack[++top] = i + 2;
+            stack[++top] = high;
+        }
+
+        printf("    After: ");
+        for (int k = 0; k < size; k++) {
+            printf("%d ", arr[k]);
+        }
+        printf("\n\n");
+    }
+
+    // Print the sorted array
+    printf("The quick sorted array in ascending order as follows:\n");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
 }
