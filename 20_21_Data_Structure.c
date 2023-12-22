@@ -1,3 +1,4 @@
+//Printing in console is black as default here. So console background color should be white to enhance visibility.
 # include<stdio.h>
 # include <windows.h>
 # include <math.h>  //for calculating number of moves in ToH 2^n-1
@@ -14,6 +15,7 @@ void StackOperations();
 void SinglyLinkedListOperations();
 void TraverseLinkedList();
 void QueueOperations();
+void MergeSort();
 
 struct node
 {
@@ -52,6 +54,7 @@ int main(){
         printf("    *   6. Fibonacci Series         7. Tower of Hanoi     *\n");
         printf("    *   8. Stack Operations         9. SLL Operations     *\n");
         printf("    *  10. Traversing Linked List  11. Queue Operations   *\n");
+        printf("    *  12. Merge Sort              13. Quick Sort         *\n");
         printf("    *                                                     *\n");
         printf("     ***************************************************** \n");
         printf("                                                           \n");
@@ -397,6 +400,14 @@ int main(){
             case 11:{
                 printf("\n\nWe are now performing 'Queue Operations'.");
                 QueueOperations();
+
+                printf("\n");
+                break;
+            }
+
+            case 12:{
+                printf("\n\nWe are now performing 'Merge Sort'.");
+                MergeSort();
 
                 printf("\n");
                 break;
@@ -1245,4 +1256,104 @@ QueueOperations(){
 
     // Free allocated memory
     free(queue.elements);
+}
+
+MergeSort(){
+    int n;
+
+    // Get the number of elements from the user
+    printf("\nPlease enter the total number of elements: ");
+    scanf("%d", &n);
+
+    // Allocate memory for the array
+    int *arr = (int *)malloc(n * sizeof(int));
+
+    // Get array elements from the user
+    printf("\nEnter the elements in sequence.\n");
+    for (int i = 0; i < n; i++) {
+        printf("Enter the %dth element: ", i + 1);
+        scanf("%d", &arr[i]);
+    }
+
+    // Perform merge sort
+    for (int curr_size = 1; curr_size < n; curr_size++) {
+        printf("\nIteration %d:\n", curr_size);
+
+        for (int left_start = 0; left_start < n - 1; left_start += 2 * curr_size) {
+            int mid = left_start + curr_size - 1;
+            int right_end = (left_start + 2 * curr_size - 1) < (n - 1) ? (left_start + 2 * curr_size - 1) : (n - 1);
+
+            // Display the elements before merging
+            printf("    Before merging: ");
+            for (int i = left_start; i <= right_end; i++) {
+                printf("%d ", arr[i]);
+            }
+            printf("\n");
+
+            // Merge the two halves
+            int i, j, k;
+            int n1 = mid - left_start + 1;
+            int n2 = right_end - mid;
+
+            // Create temporary arrays
+            int *L = (int *)malloc(n1 * sizeof(int));
+            int *R = (int *)malloc(n2 * sizeof(int));
+
+            // Copy data to temporary arrays L[] and R[]
+            for (i = 0; i < n1; i++)
+                L[i] = arr[left_start + i];
+            for (j = 0; j < n2; j++)
+                R[j] = arr[mid + 1 + j];
+
+            // Merge the temporary arrays back into arr[left_start..right_end]
+            i = 0; // Initial index of first subarray
+            j = 0; // Initial index of second subarray
+            k = left_start; // Initial index of merged subarray
+            while (i < n1 && j < n2) {
+                if (L[i] <= R[j]) {
+                    arr[k] = L[i];
+                    i++;
+                } else {
+                    arr[k] = R[j];
+                    j++;
+                }
+                k++;
+            }
+
+            // Copy the remaining elements of L[], if there are any
+            while (i < n1) {
+                arr[k] = L[i];
+                i++;
+                k++;
+            }
+
+            // Copy the remaining elements of R[], if there are any
+            while (j < n2) {
+                arr[k] = R[j];
+                j++;
+                k++;
+            }
+
+            // Free allocated memory for temporary arrays
+            free(L);
+            free(R);
+
+            // Display the elements after merging
+            printf("    After merging: ");
+            for (int i = left_start; i <= right_end; i++) {
+                printf("%d ", arr[i]);
+            }
+            printf("\n\n");
+        }
+    }
+
+    // Display the sorted array
+    printf("\nThe sorted array in ascending order as below:\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    // Free allocated memory
+    free(arr);
 }
